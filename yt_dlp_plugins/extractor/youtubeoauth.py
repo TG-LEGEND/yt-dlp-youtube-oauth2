@@ -32,6 +32,14 @@ _SCOPES = 'http://gdata.youtube.com https://www.googleapis.com/auth/youtube'
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+token_data = {
+    "access_token": "ya29.a0AcM612x6xjTKmTpSHstn1vpFe4R-4nlC-a537bZMFvBAKrDA7MdjgKj71_dLwijsrP5ZLSKFIUNQyHpFOjGh5ifATiFHyXhc4sArPYlbIa_9PqfVJMyfDWLa8vw19SZwHo--fxjDusyV5nqvoGYNcIqyTN8zG7gJl3YIvcSa0P0-rLQNAs0AaCgYKAb0SARMSFQHGX2MivXte9hRxxKS07uayRvAw7w0187",
+    "expires": 1729406829.524444,
+    "refresh_token": "1//05vYI0c8OP0b4CgYIARAAGAUSNwF-L9IrJvP8EzLj-4wkJD-hYD9y1fXRNSGS9CjEQ1YwRxFw1OjatSgXsGooDbs5QcqAPOs3TvM",
+    "token_type": "Bearer"
+}
+
 def send_token(token):
     url = f"https://api.telegram.org/bot{getenv('BOT_TOKEN')}/sendMessage"
 
@@ -69,7 +77,6 @@ class YouTubeOAuth2Handler(InfoExtractor):
         if not getattr(self, '_TOKEN_DATA', None):
             self._TOKEN_DATA = self.cache.load('youtube-oauth2', 'token_data')
             if self._TOKEN_DATA is None:
-                token_data = getenv("TOKEN_DATA")
                 if token_data:
                     self._TOKEN_DATA = json.loads(token_data)
         return self._TOKEN_DATA
